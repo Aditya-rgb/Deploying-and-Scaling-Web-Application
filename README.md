@@ -28,10 +28,6 @@ This README provides a comprehensive guide to set up, containerize, and deploy a
    git clone https://github.com/<your-username>/SampleMERNwithMicroservices.git
    ```
    
-# MERN Stack Deployment with Microservices on AWS
-
-This document provides a summarized step-by-step guide to set up, containerize, and deploy a MERN application with microservices architecture on AWS.
-
 ---
 
 ## **2. Set Up the AWS Environment**
