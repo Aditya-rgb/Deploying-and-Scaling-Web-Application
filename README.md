@@ -128,7 +128,9 @@ git push codecommit main
    sudo systemctl start jenkins
    sudo systemctl enable jenkins
    ```
+
    ![Alt Text](/images/JK-8.JPG)
+   
  4. **Access Jenkins UI:**
 
    - **Navigate to Jenkins UI:**
