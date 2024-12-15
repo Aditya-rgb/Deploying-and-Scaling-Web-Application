@@ -398,7 +398,7 @@ git push codecommit main
      kubectl apply -f https://raw.githubusercontent.com/fluent/fluentd-kubernetes-daemonset/master/fluentd-daemonset-cloudwatch.yaml
      ```
 
-## **Conclusion**
+## **10. Conclusion**
 
 This project demonstrates the end-to-end deployment of a scalable MERN stack application with microservices architecture on AWS. By leveraging modern cloud-native technologies such as Docker, Kubernetes, and AWS services like EKS, CloudWatch, and Route 53, the application achieves:
 
