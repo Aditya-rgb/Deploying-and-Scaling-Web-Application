@@ -100,6 +100,51 @@ git push codecommit main
 
 - Install Jenkins on an EC2 instance.
 - Create Jenkins pipeline jobs to build Docker images and push them to Amazon ECR.
+ 
+
+
+
+ #### 1.1. Install Jenkins
+
+ 1. **Update system and install Java:**
+
+   ```bash
+   sudo apt update
+   sudo apt install openjdk-11-jdk
+   ```
+   
+ 2. **Install Jenkins:**
+
+   ```bash
+   wget -q -O - https://pkg.jenkins.io/jenkins.io.key | sudo apt-key add -
+   sudo sh -c 'echo deb http://pkg.jenkins.io/debian/ $(lsb_release -cs) main > /etc/apt/sources.list.d/jenkins.list'
+   sudo apt update
+   sudo apt install jenkins
+   ```
+
+ 3. **Start Jenkins:**
+
+   ```bash
+   sudo systemctl start jenkins
+   sudo systemctl enable jenkins
+   ```
+   ![Alt Text](/images/JK-8.JPG)
+ 4. **Access Jenkins UI:**
+
+   - **Navigate to Jenkins UI:**
+     - Open your browser and go to:  
+    `http://<your-ec2-public-ip>:8080`
+
+   - **Unlock Jenkins:**
+     - Retrieve the initial setup password by running the following command:  
+       ```bash
+       cat /var/lib/jenkins/secrets/initialAdminPassword
+       ```
+  - Copy the password and paste it into the Jenkins UI to unlock Jenkins and complete the setup.
+
+   ![Alt Text](/images/JK-1.JPG)
+
+   ![Alt Text](/images/JK-2.JPG)
 
 ---
 
