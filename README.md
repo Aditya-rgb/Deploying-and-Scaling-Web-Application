@@ -256,6 +256,8 @@ git push codecommit main
   print(f"Auto Scaling Group Created: MERN-ASG")
 
 
+# Replace <AMI-ID> with the AMI ID of your Dockerized backend/frontend.
+# Replace <KEY-PAIR-NAME> with your EC2 key pair name.
 ---
 
 ## **7. Networking and Deployment**
