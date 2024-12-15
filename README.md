@@ -258,6 +258,8 @@ git push codecommit main
 
 # Replace <AMI-ID> with the AMI ID of your Dockerized backend/frontend.
 # Replace <KEY-PAIR-NAME> with your EC2 key pair name.
+
+```
 ---
 
 ## **7. Networking and Deployment**
