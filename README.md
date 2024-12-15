@@ -67,6 +67,12 @@ This README provides a comprehensive guide to set up, containerize, and deploy a
   ```
 
 - Build Docker images and push them to Amazon ECR.
+  
+  ```bash
+  #Authenticate Docker
+  aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <account_id>.dkr.ecr.<region>.amazonaws.com
+  ```
+
 
 ---
 
