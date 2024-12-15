@@ -56,13 +56,13 @@ This README provides a comprehensive guide to set up, containerize, and deploy a
   ```bash
   # Dockerfile for Backend
   
- FROM node:14
- WORKDIR /app
- COPY package*.json ./
- RUN npm install
- COPY . .
- CMD ["npm", "start"]
- EXPOSE 5000
+  FROM node:14
+  WORKDIR /app
+  COPY package*.json ./
+  RUN npm install
+  COPY . .
+  CMD ["npm", "start"]
+  EXPOSE 5000
 
   ```
 
