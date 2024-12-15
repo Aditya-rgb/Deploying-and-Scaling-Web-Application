@@ -301,6 +301,8 @@ git push codecommit main
      curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
      ```
 
+     ![Alt Text](/images/cap-helm-installation.JPG)
+
 4. **Create Kubernetes Manifests:**
    - Write Helm charts or YAML manifests for your MERN application components (frontend, backend). Example for the backend:
      ```yaml
@@ -399,4 +401,4 @@ git push codecommit main
 
 
 
-These steps ensure your MERN application is deployed, monitored, and documented effectively. Let me know if you need any additional details or refinements!
+
