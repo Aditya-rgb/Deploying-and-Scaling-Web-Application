@@ -72,6 +72,9 @@ This README provides a comprehensive guide to set up, containerize, and deploy a
   #Authenticate Docker
   aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <account_id>.dkr.ecr.<region>.amazonaws.com
   ```
+![Alt Text](/images/mern-images.JPG)
+
+![Alt Text](/images/mern-ecr-repo.JPG)
 
 
 ---
@@ -79,6 +82,17 @@ This README provides a comprehensive guide to set up, containerize, and deploy a
 ## **4. Version Control with AWS CodeCommit**
 
 - Create a CodeCommit repository and push your application code to it for version control.
+```bash
+# Create a CodeCommit repository
+aws codecommit create-repository --repository-name MERNApp
+
+# Add the repository as a remote
+git remote add codecommit https://git-codecommit.<region>.amazonaws.com/v1/repos/MERNApp
+
+# Push code
+git push codecommit main
+
+```
 
 ---
 
