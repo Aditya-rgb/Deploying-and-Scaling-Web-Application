@@ -40,6 +40,32 @@ This README provides a comprehensive guide to set up, containerize, and deploy a
 ## **3. Prepare the MERN Application**
 
 - Create `Dockerfile` for both backend and frontend services to containerize the application.
+  ```bash
+  # Dockerfile for Frontend
+
+  FROM node:14
+  WORKDIR /app
+  COPY package*.json ./
+  RUN npm install
+  COPY . .
+  CMD ["npm", "start"]
+  EXPOSE 3000
+
+  ```
+
+  ```bash
+  # Dockerfile for Backend
+  
+ FROM node:14
+ WORKDIR /app
+ COPY package*.json ./
+ RUN npm install
+ COPY . .
+ CMD ["npm", "start"]
+ EXPOSE 5000
+
+  ```
+
 - Build Docker images and push them to Amazon ECR.
 
 ---
