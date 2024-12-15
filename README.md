@@ -154,6 +154,108 @@ git push codecommit main
 
 - Use Python and Boto3 to define and provision AWS resources like VPC, subnets, security groups, and Auto Scaling Groups programmatically.
 
+  ```bash
+
+  import boto3
+
+  # Initialize the EC2 client
+  ec2 = boto3.client('ec2')
+  autoscaling = boto3.client('autoscaling')
+
+  # Step 1: Create a VPC
+  vpc_response = ec2.create_vpc(CidrBlock='10.0.0.0/16')
+  vpc_id = vpc_response['Vpc']['VpcId']
+  print(f"VPC Created: {vpc_id}")
+
+  # Tag the VPC
+  ec2.create_tags(Resources=[vpc_id], Tags=[{'Key': 'Name', 'Value': 'MERN-VPC'}])
+
+  # Step 2: Create Subnets
+  subnet1_response = ec2.create_subnet(
+      CidrBlock='10.0.1.0/24',
+      VpcId=vpc_id,
+      AvailabilityZone='us-east-1a'
+  )
+  subnet2_response = ec2.create_subnet(
+      CidrBlock='10.0.2.0/24',
+      VpcId=vpc_id,
+      AvailabilityZone='us-east-1b'
+  )
+  subnet1_id = subnet1_response['Subnet']['SubnetId']
+  subnet2_id = subnet2_response['Subnet']['SubnetId']
+  print(f"Subnets Created: {subnet1_id}, {subnet2_id}")
+
+  # Step 3: Create an Internet Gateway and Attach to the VPC
+  igw_response = ec2.create_internet_gateway()
+  igw_id = igw_response['InternetGateway']['InternetGatewayId']
+  ec2.attach_internet_gateway(InternetGatewayId=igw_id, VpcId=vpc_id)
+  print(f"Internet Gateway Created and Attached: {igw_id}")
+
+  # Step 4: Create a Route Table and Associate with Subnets
+  route_table_response = ec2.create_route_table(VpcId=vpc_id)
+  route_table_id = route_table_response['RouteTable']['RouteTableId']
+  ec2.create_route(
+      RouteTableId=route_table_id,
+      DestinationCidrBlock='0.0.0.0/0',
+      GatewayId=igw_id
+  )
+  ec2.associate_route_table(RouteTableId=route_table_id, SubnetId=subnet1_id)
+  ec2.associate_route_table(RouteTableId=route_table_id, SubnetId=subnet2_id)
+  print(f"Route Table Created and Associated: {route_table_id}")
+
+  # Step 5: Create a Security Group
+  sg_response = ec2.create_security_group(
+      GroupName='MERN-SG',
+      Description='Security group for MERN application',
+      VpcId=vpc_id
+  )
+  sg_id = sg_response['GroupId']
+  ec2.authorize_security_group_ingress(
+      GroupId=sg_id,
+      IpPermissions=[
+          {
+              'IpProtocol': 'tcp',
+              'FromPort': 80,
+              'ToPort': 80,
+              'IpRanges': [{'CidrIp': '0.0.0.0/0'}]
+          },
+          {
+              'IpProtocol': 'tcp',
+              'FromPort': 22,
+              'ToPort': 22,
+              'IpRanges': [{'CidrIp': '0.0.0.0/0'}]
+          }
+      ]
+  )
+  print(f"Security Group Created: {sg_id}")
+
+  # Step 6: Create an Auto Scaling Group
+  launch_template_response = ec2.create_launch_template(
+      LaunchTemplateName='MERN-Launch-Template',
+      LaunchTemplateData={
+          'ImageId': '<AMI-ID>',
+          'InstanceType': 't2.micro',
+          'KeyName': '<KEY-PAIR-NAME>',
+          'SecurityGroupIds': [sg_id],
+          'UserData': 'IyEvYmluL2Jhc2ggCnN1ZG8gYXB0IHVwZGF0ZSAmJiBzdWRvIGFwdCBpbnN0YWxsIGRvY2tlciAtLWEgCnN1ZG8gZG9ja2VyIHJ1bg=='  # Base64 encoded startup script
+      }
+  )
+  launch_template_id = launch_template_response['LaunchTemplate']['LaunchTemplateId']
+
+  asg_response = autoscaling.create_auto_scaling_group(
+      AutoScalingGroupName='MERN-ASG',
+      LaunchTemplate={
+          'LaunchTemplateId': launch_template_id,
+          'Version': '$Latest'
+      },
+      MinSize=1,
+      MaxSize=3,
+      DesiredCapacity=2,
+      VPCZoneIdentifier=f"{subnet1_id},{subnet2_id}"
+  )
+  print(f"Auto Scaling Group Created: MERN-ASG")
+
+
 ---
 
 ## **7. Networking and Deployment**
